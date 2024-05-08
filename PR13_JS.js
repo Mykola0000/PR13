@@ -2,7 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const player = document.getElementById("player");
     const gameContainer = document.getElementById("gameContainer");
     const scoreDisplay = document.getElementById("score");
+    const timeDisplay = document.getElementById("time");
     let score = 0;
+    let timeLeft = 30;
 
     function movePlayer(event) {
         const rect = gameContainer.getBoundingClientRect();
@@ -35,6 +37,17 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    function updateTime() {
+        timeLeft--;
+        timeDisplay.textContent = "Time left: " + timeLeft + "s";
+
+        if (timeLeft === 0) {
+            clearInterval(timer);
+            gameContainer.removeEventListener("mousemove", movePlayer);
+            alert("Game Over! Your final score is: " + score);
+        }
+    }
+
     gameContainer.addEventListener("mousemove", movePlayer);
 
     const target = document.createElement("div");
@@ -52,5 +65,5 @@ document.addEventListener("DOMContentLoaded", function() {
         target.style.backgroundColor = colorSelect.value;
     });
 
-    setInterval(checkCollision, 100);
+    const timer = setInterval(updateTime, 1000);
 });
