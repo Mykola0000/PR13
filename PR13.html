@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гра "Ловець квадратика"</title>
+    <style>
+        #gameContainer {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+        }
+
+        #player {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Гра "Ловець квадратика"</h1>
+    <div id="gameContainer">
+        <div id="player"></div>
+    </div>
+    
+    <label for="difficulty">Оберіть складність:</label>
+    <select id="difficulty">
+        <option value="easy">Легка</option>
+        <option value="medium">Середня</option>
+        <option value="hard">Важка</option>
+    </select>
+
+    <label for="color">Оберіть колір квадратика:</label>
+    <select id="color">
+        <option value="red">Червоний</option>
+        <option value="blue">Синій</option>
+        <option value="green">Зелений</option>
+    </select>
+
+    <p>Бали: <span id="score">0</span></p>
+
+    <script src="PR13_JS.js"></script>
+</body>
+</html>
