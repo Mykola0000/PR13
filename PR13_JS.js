@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const scoreDisplay = document.getElementById("score");
     const timeDisplay = document.getElementById("time");
     let score = 0;
-    let timeLeft = 15;
+    let timeLeft = 30;
 
     function movePlayer(event) {
         const rect = gameContainer.getBoundingClientRect();
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
             playerRect.top < targetRect.bottom &&
             playerRect.bottom > targetRect.top) {
             score++;
-            scoreDisplay.textContent = "Score: " + score;
+            scoreDisplay.textContent = score;
             const newPosition = getRandomPosition();
             target.style.left = newPosition.x + "px";
             target.style.top = newPosition.y + "px";
