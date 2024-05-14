@@ -1,49 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Гра "Ловець квадратика"</title>
-    <style>
-        #gameContainer {
-            position: relative;
-            width: 500px;
-            height: 500px;
-            border: 1px solid black;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гра - Клікай на квадратик</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
 
-        #player {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-    </style>
+  #box {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: absolute;
+    display: none; /* Початково ховаємо квадратик */
+  }
+
+  #gameControls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+</style>
 </head>
 <body>
-    <h1>Гра "Ловець квадратика"</h1>
-    <div id="gameContainer">
-        <div id="player"></div>
-    </div>
-    
-    <label for="difficulty">Оберіть складність:</label>
-    <select id="difficulty">
-        <option value="easy">Легка</option>
-        <option value="medium">Середня</option>
-        <option value="hard">Важка</option>
-    </select>
+<h1>Гра - Клікай на квадратик!</h1>
+<div id="gameControls">
+  <button onclick="startGame()">Старт</button>
+  <select id="difficulty">
+    <option value="1">Легкий</option>
+    <option value="2">Середній</option>
+    <option value="3">Важкий</option>
+  </select>
+  <input type="color" id="colorPicker">
+</div>
+<p id="score" style="display: none;">Рахунок: 0</p>
+<p id="time" style="display: none;">Час: 30 с</p>
+<div id="box"></div>
 
-    <label for="color">Оберіть колір квадратика:</label>
-    <select id="color">
-        <option value="red">Червоний</option>
-        <option value="blue">Синій</option>
-        <option value="green">Зелений</option>
-    </select>
-
-    <p>Бали: <span id="score">0</span></p>
-
-    <script src="PR13_JS.js"></script>
+<script src="JS.js"></script>
 </body>
 </html>
