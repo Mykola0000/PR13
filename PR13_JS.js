@@ -1,69 +1,82 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const player = document.getElementById("player");
-    const gameContainer = document.getElementById("gameContainer");
-    const scoreDisplay = document.getElementById("score");
-    const timeDisplay = document.getElementById("time");
-    let score = 0;
-    let timeLeft = 30;
+let score = 0;
+let timeLeft = 30; 
+let level = 1;
+let interval;
+let colors = ['red', 'blue', 'green', 'yellow']; 
 
-    function movePlayer(event) {
-        const rect = gameContainer.getBoundingClientRect();
-        const x = event.clientX - rect.left - player.clientWidth / 2;
-        const y = event.clientY - rect.top - player.clientHeight / 2;
 
-        player.style.left = x + "px";
-        player.style.top = y + "px";
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function updateScore() {
+  document.getElementById('score').textContent = `Рахунок: ${score}`;
+}
+
+
+function updateTime() {
+  document.getElementById('time').textContent = `Час: ${timeLeft} с`;
+}
+
+
+function startGame() {
+  score = 0;
+  timeLeft = 30;
+  level = document.getElementById('difficulty').value; 
+  updateScore();
+  updateTime();
+  moveBox(); 
+  interval = setInterval(updateTime, 1000); 
+  document.getElementById('gameControls').style.display = 'none'; 
+  document.getElementById('score').style.display = 'block'; 
+  document.getElementById('time').style.display = 'block'; 
+  document.getElementById('box').style.display = 'block'; 
+}
+
+
+function moveBox() {
+  const box = document.getElementById('box');
+  const screenWidth = window.innerWidth - 100; 
+  const screenHeight = window.innerHeight - 100; 
+  const randomX = getRandomNumber(0, screenWidth);
+  const randomY = getRandomNumber(0, screenHeight);
+  box.style.left = `${randomX}px`;
+  box.style.top = `${randomY}px`;
+}
+
+
+function handleClick() {
+  score++;
+  updateScore();
+  moveBox();
+  if (timeLeft === 30) {
+    startTimer();
+  }
+}
+
+
+function startTimer() {
+  interval = setInterval(function() {
+    timeLeft--;
+    updateTime();
+    if (timeLeft === 0) {
+      endGame();
     }
+  }, 1000);
+}
 
-    function getRandomPosition() {
-        const x = Math.floor(Math.random() * (gameContainer.clientWidth - player.clientWidth));
-        const y = Math.floor(Math.random() * (gameContainer.clientHeight - player.clientHeight));
-        return { x, y };
-    }
 
-    function checkCollision() {
-        const playerRect = player.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
+function endGame() {
+  clearInterval(interval); 
+  alert(`Гра завершена! Ваш рахунок: ${score}`);
+}
 
-        if (playerRect.left < targetRect.right &&
-            playerRect.right > targetRect.left &&
-            playerRect.top < targetRect.bottom &&
-            playerRect.bottom > targetRect.top) {
-            score++;
-            scoreDisplay.textContent = score;
-            const newPosition = getRandomPosition();
-            target.style.left = newPosition.x + "px";
-            target.style.top = newPosition.y + "px";
-        }
-    }
 
-    function updateTime() {
-        timeLeft--;
-        timeDisplay.textContent = "Time left: " + timeLeft + "s";
+document.getElementById('box').addEventListener('click', handleClick);
 
-        if (timeLeft === 0) {
-            clearInterval(timer);
-            gameContainer.removeEventListener("mousemove", movePlayer);
-            alert("Game Over! Your final score is: " + score);
-        }
-    }
 
-    gameContainer.addEventListener("mousemove", movePlayer);
-
-    const target = document.createElement("div");
-    target.style.width = "20px";
-    target.style.height = "20px";
-    target.style.backgroundColor = "yellow";
-    target.style.position = "absolute";
-    const position = getRandomPosition();
-    target.style.left = position.x + "px";
-    target.style.top = position.y + "px";
-    gameContainer.appendChild(target);
-
-    const colorSelect = document.getElementById("color");
-    colorSelect.addEventListener("change", function() {
-        target.style.backgroundColor = colorSelect.value;
-    });
-
-    const timer = setInterval(updateTime, 1000);
+document.getElementById('colorPicker').addEventListener('change', function(event) {
+  const color = event.target.value;
+  document.getElementById('box').style.backgroundColor = color;
 });
